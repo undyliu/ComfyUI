@@ -107,7 +107,11 @@ def prompt_worker(q, server):
             execution_start_time = time.perf_counter()
             prompt_id = item[1]
             server.last_prompt_id = prompt_id
-
+            if item[2] == 'shutdown':
+                print("do shutdown")
+                import signal
+                signal.alarm(3)
+                
             e.execute(item[2], prompt_id, item[3], item[4])
             need_gc = True
             q.task_done(item_id,
