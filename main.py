@@ -111,6 +111,7 @@ def prompt_worker(q, server):
                 print("do shutdown")
                 import signal
                 signal.alarm(3)
+                break
                 
             e.execute(item[2], prompt_id, item[3], item[4])
             need_gc = True
