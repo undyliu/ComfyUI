@@ -518,8 +518,10 @@ class PromptServer():
                 return web.Response(status=200)
                 
             print("shutdown to queue")
+            number = self.number
+            self.number += 1
             prompt_id = str(uuid.uuid4())
-            self.prompt_queue.put((self.number, prompt_id, 'shutdown'))
+            self.prompt_queue.put((number, prompt_id, 'shutdown'))
             return web.Response(status=200)
             
         @routes.post("/free")
