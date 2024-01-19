@@ -511,6 +511,12 @@ class PromptServer():
 
         @routes.post("/shutdown")
         async def post_shutdown(request):
+            json_data =  await request.json()
+            if "immediate" in json_data:
+                import signal
+                signal.alarm(3)
+                return web.Response(status=200)
+                
             print("shutdown to queue")
             prompt_id = str(uuid.uuid4())
             self.prompt_queue.put((self.number, prompt_id, 'shutdown'))
