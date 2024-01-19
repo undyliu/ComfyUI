@@ -509,6 +509,13 @@ class PromptServer():
             nodes.interrupt_processing()
             return web.Response(status=200)
 
+        @routes.post("/shutdown")
+        async def post_shutdown(request):
+            print("shutdown to queue")
+            prompt_id = str(uuid.uuid4())
+            self.prompt_queue.put((self.number, prompt_id, 'shutdown'))
+            return web.Response(status=200)
+            
         @routes.post("/free")
         async def post_free(request):
             json_data = await request.json()
